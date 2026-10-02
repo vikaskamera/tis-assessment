@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Colour tokens as RGB channels so Tailwind opacity modifiers work. */
+:root {
+  --bg: 242 245 242;
+  --card: 255 255 255;
+  --fg: 14 31 27;
+  --muted: 82 102 96;
+  --pine: 15 61 51;
+  --accent: 242 182 50;
+}
+[data-theme="dark"] {
+  --bg: 8 21 18;
+  --card: 16 37 32;
+  --fg: 238 243 240;
+  --muted: 150 171 164;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  @apply bg-bg text-fg font-body antialiased;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+:focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 3px; }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track { animation: marquee 60s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+
+/* Hide the native cursor only when the custom one is active (fine pointers). */
+@media (pointer: fine) {
+  html.has-custom-cursor, html.has-custom-cursor a, html.has-custom-cursor button { cursor: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .marquee-track { animation: none; }
+}
